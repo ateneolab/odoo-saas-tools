@@ -10,10 +10,7 @@
         'auth_oauth',
         'auth_oauth_ip',
         'auth_oauth_check_client_id',
-<<<<<<< HEAD
-=======
         'saas_base',
->>>>>>> 5f7cf7f7d347a244641feb5d38ac8acd180e4e2b
         'mail',
         'web_settings_dashboard',
         'access_limit_records_number',
