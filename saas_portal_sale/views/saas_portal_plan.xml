@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- plans -->
+    <record id="view_sale_plans_form" model="ir.ui.view">
+        <field name="name">saas_portal_sale.plans.form</field>
+        <field name="model">saas_portal.plan</field>
+        <field name="inherit_id" ref="saas_portal.view_plans_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='maximum_allowed_trial_dbs_per_partner']" position="after">
+                  <field name="free_subdomains"/>
+                  <field name="non_trial_instances"/>
+                </xpath>
+                <!-- Adding new page -->
+                <xpath expr="//page[@name='website']" position="before">
+                    <page string="Product and Topups" name="topups">
+                        <group>
+                            <group string="Product Template" name="template">
+                                <field name="product_tmpl_id"/>
+                            </group>
+                            <group string="Contract Template" name="contract_template">
+                                <field name="contract_template_id"/>
+                            </group>
+                        </group>
+                        <separator string="Variants"/>
+                        <field name="attribute_line_ids">
+                            <tree>
+                                <field name="attribute_id"/>
+                                <field name="value_ids" widget="many2many_tags"/>
+                            </tree>
+                            <form>
+                                <field name="attribute_id"/>
+                                <field name="value_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="saas_lang"/>
+                                        <field name="template_ids" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </form>
+                        </field>
+                        <separator string="Topups"/>
+                        <field name="product_tmpl_topup_ids">
+                            <tree>
+                                <field name="name"/>
+                                <field name="saas_topup_type"/>
+                                <field name="uom_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <field name="state" position="before">
+                    <button string="Add languages" type="action" name="%(saas_plan_add_language_templates_wizard_action)d" states="confirmed"/>
+                </field>
+            </data>
+        </field>
+    </record>
+</odoo>
