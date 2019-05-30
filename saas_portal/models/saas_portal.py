@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from odoo import api, exceptions, fields, models
 from odoo.tools import scan_languages
 from odoo.tools.translate import _
-from odoo.addons.base.res.res_partner import _tz_get
+from odoo.addons.base.models.res_partner import _tz_get
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 from odoo.addons.saas_base.exceptions import MaximumTrialDBException
@@ -288,7 +288,7 @@ class SaasPortalPlan(models.Model):
     @api.multi
     def _create_new_database(self, dbname=None, client_id=None,
                              partner_id=None, user_id=None, notify_user=True,
-                             trial=False, support_team_id=None, async=None):
+                             trial=False, support_team_id=None, asynchronous=None):
         self.ensure_one()
         p_client = self.env['saas_portal.client']
         p_server = self.env['saas_portal.server']
@@ -676,7 +676,7 @@ class SaasPortalClient(models.Model):
     plan_id = fields.Many2one('saas_portal.plan', string='Plan',
                               track_visibility='onchange', ondelete='set null', readonly=True)
     expiration_datetime = fields.Datetime(string="Expiration")
-    expired = fields.Boolean('Expired', readonly=True)
+    expired = fields.Boolean('Expired')
     user_id = fields.Many2one(
         'res.users', default=lambda self: self.env.user, string='Salesperson')
     notification_sent = fields.Boolean(

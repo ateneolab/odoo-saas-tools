@@ -6,12 +6,11 @@
     'category': 'SaaS',
     "support": "apps@it-projects.info",
     'website': 'https://it-projects.info',
-    'depends': [
-        'oauth_provider',
-        'website',
-        'auth_signup',
-        'saas_base',
-    ],
+    'depends': ['oauth_provider',
+                'website',
+                'auth_signup',
+                'saas_base',
+                'saas_utils'],
     'data': [
         'data/mail_template_data.xml',
         'data/plan_sequence.xml',
