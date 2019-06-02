@@ -7,9 +7,8 @@ from datetime import datetime, timedelta
 from odoo import api, exceptions, fields, models
 from odoo.tools import scan_languages
 from odoo.tools.translate import _
-from odoo.addons.base.models.res_partner import _tz_get
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
-
+from odoo.addons.base.models.res_partner import _tz_get
 from odoo.addons.saas_base.exceptions import MaximumTrialDBException
 from odoo.addons.saas_base.exceptions import MaximumDBException
 from werkzeug.exceptions import Forbidden
@@ -277,8 +276,7 @@ class SaasPortalPlan(models.Model):
         self.ensure_one()
         trial_hours = trial and self.expiration
         initial_expiration_datetime = datetime.now()
-        trial_expiration_datetime = (initial_expiration_datetime + timedelta(
-            hours=trial_hours)).strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+        trial_expiration_datetime = (initial_expiration_datetime + timedelta(hours=trial_hours)).strftime(DEFAULT_SERVER_DATETIME_FORMAT)
         return trial and trial_expiration_datetime or initial_expiration_datetime.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
 
     @api.multi
@@ -288,7 +286,7 @@ class SaasPortalPlan(models.Model):
     @api.multi
     def _create_new_database(self, dbname=None, client_id=None,
                              partner_id=None, user_id=None, notify_user=True,
-                             trial=False, support_team_id=None, asynchronous=None):
+                             trial=False, support_team_id=None, async=None):
         self.ensure_one()
         p_client = self.env['saas_portal.client']
         p_server = self.env['saas_portal.server']
@@ -763,7 +761,7 @@ class SaasPortalClient(models.Model):
     def write(self, values):
         if 'expiration_datetime' in values:
             payload = {
-                'params': [{'key': 'saas_client.expiration_datetime', 'value': values['expiration_datetime'], 'hidden': True}],
+                'params': [{'key': 'saas_client.expiration_datetime', 'value': values['expiration_datetime'].strftime(DEFAULT_SERVER_DATETIME_FORMAT), 'hidden': True}],
             }
 
             for record in self:
@@ -823,8 +821,7 @@ class SaasPortalClient(models.Model):
         if expiration:
             now = datetime.now()
             delta = timedelta(hours=expiration)
-            vals['expiration_datetime'] = (
-                now + delta).strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+            vals['expiration_datetime'] = (now + delta)
 
         client = p_client.create(vals)
         client_id = client.client_id

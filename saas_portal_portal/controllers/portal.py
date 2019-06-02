@@ -11,7 +11,7 @@ class CustomerPortal(CustomerPortal):
 
         SaasPortalClient = request.env['saas_portal.client']
 
-        instance_count = SaasPortalClient.sudo().search_count([
+        instance_count = SaasPortalClient.search_count([
             ('partner_id', '=', partner.id),
         ])
 
@@ -32,61 +32,14 @@ class CustomerPortal(CustomerPortal):
         })
         return request.render("saas_portal_portal.portal_my_instances", values)
 
-    @http.route("/my/instance/<int:instance_id>", type='http', auth="user", website=True)
-    def instance_detail(self, instance_id, **post):
-        instance = request.env['saas_portal.client'].sudo().browse(instance_id)
-        ICPsudo = request.env['ir.config_parameter'].sudo()
-        base_saas_domain = ICPsudo.get_param('base_saas_domain')
-        if instance and instance.domain and instance.domain != base_saas_domain: base_saas_domain = instance.domain
-        values = {
-            'domain_name': instance.name,
-            'saas_portal_client': instance,
-            'base_saas_domain': base_saas_domain,
-        }
-        return request.render("saas_portal_portal.instance_detail", values)
-
     @http.route("/my/domain/<int:instance_id>", type='http', auth="user", website=True)
     def change_domain(self, instance_id, **post):
         instance = request.env['saas_portal.client'].sudo().browse(instance_id)
         ICPsudo = request.env['ir.config_parameter'].sudo()
         base_saas_domain = ICPsudo.get_param('base_saas_domain')
-        if instance and instance.domain and instance.domain != base_saas_domain: base_saas_domain = instance.domain
         values = {
             'domain_name': instance.name,
             'saas_portal_client': instance,
             'base_saas_domain': base_saas_domain,
         }
         return request.render("saas_portal_portal.change_domain", values)
-
-    @http.route("/my/domain/rename/<int:instance_id>", type='http', auth="user", website=True)
-    def rename_database(self, instance_id, **post):
-        instance = request.env['saas_portal.client'].sudo().browse(instance_id)
-        ICPsudo = request.env['ir.config_parameter'].sudo()
-        base_saas_domain = ICPsudo.get_param('base_saas_domain')
-        if instance and instance.domain and instance.domain != base_saas_domain: base_saas_domain = instance.domain
-        values = {
-            'domain_name': instance.name,
-            'saas_portal_client': instance,
-            'base_saas_domain': base_saas_domain,
-        }
-        return request.render("saas_portal_portal.rename_database", values)
-
-    @http.route("/my/domain/delete/<int:instance_id>", type='http', auth="user", website=True)
-    def delete_database(self, instance_id, **post):
-        instance = request.env['saas_portal.client'].sudo().browse(instance_id)
-        ICPsudo = request.env['ir.config_parameter'].sudo()
-        base_saas_domain = ICPsudo.get_param('base_saas_domain')
-        if instance and instance.domain and instance.domain != base_saas_domain: base_saas_domain = instance.domain
-        values = {
-            'domain_name': instance.name,
-            'saas_portal_client': instance,
-            'base_saas_domain': base_saas_domain,
-        }
-        return request.render("saas_portal_portal.delete_database", values)
-
-    @http.route(['/saas_portal_portal/delete_db'], type='json', auth="public", website=True)
-    def subscribe(self, client_id, **post):
-        client = request.env['saas_portal.client'].sudo().browse(int(client_id))
-        if client:
-            client._delete_database_server(force_delete=True)
-        return True
