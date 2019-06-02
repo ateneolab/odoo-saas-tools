@@ -6,7 +6,7 @@
     'website': 'https://it-projects.info',
     'category': 'SaaS',
     'summary': 'Sells SaaS products in the Webshop',
-    'version': '11.0.1.1.0',
+    'version': '12.0.1.1.0',
     'depends': [
         'sale',
         'website_sale',
