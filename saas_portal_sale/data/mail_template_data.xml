@@ -1,4 +1,4 @@
-<openerp>
+<odoo>
     <data noupdate="0">
         <record id="email_template_create_saas" model="mail.template">
             <field name="name">Send SaaS creation page to partner</field>
@@ -83,4 +83,4 @@
         </record>
 
     </data>
-</openerp>
+</odoo>

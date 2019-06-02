@@ -268,7 +268,7 @@ class SaasPortalPlan(models.Model):
             'login': owner_user.login,
             'name': owner_user.name,
             'email': owner_user.email,
-            'password_crypt': owner_user.password_crypt,
+            'password': owner_user.password,
         }
         return owner_user_data
 
@@ -737,7 +737,7 @@ class SaasPortalClient(models.Model):
         notification_delta = int(self.env['ir.config_parameter'].sudo(
         ).get_param('saas_portal.expiration_notify_in_advance', '0'))
         if notification_delta > 0:
-            records = self.search([('expiration_datetime', '<=', (datetime.now() + timedelta(days=notification_delta)).strftime(DEFAULT_SERVER_DATETIME_FORMAT)),
+            records = self.search([('expiration_datetime', '<=', (datetime.now() + timedelta(days=notification_delta))),
                                    ('notification_sent', '=', False)])
             records.write({'notification_sent': True})
             for record in records:
@@ -873,7 +873,7 @@ class SaasPortalClient(models.Model):
     def get_upgrade_database_payload(self):
         self.ensure_one()
         return {'params': [{'key': 'saas_client.expiration_datetime',
-                            'value': self.expiration_datetime,
+                            'value': self.expiration_datetime.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
                             'hidden': True}]}
 
     @api.multi
@@ -883,7 +883,7 @@ class SaasPortalClient(models.Model):
                 'params': [{'key': 'saas_client.max_users',
                             'value': record.max_users, 'hidden': True},
                            {'key': 'saas_client.expiration_datetime',
-                            'value': record.expiration_datetime,
+                            'value': record.expiration_datetime.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
                             'hidden': True},
                            {'key': 'saas_client.total_storage_limit',
                             'value': record.total_storage_limit,
