@@ -8,8 +8,7 @@
     'version': '12.0.1.0.0',
     'depends': [
         'sale',
-        'website_sale
-',
+        'website_sale',
         'saas_portal',
         'product_price_factor',
         'contract',
