@@ -1,9 +1,3 @@
-`1.1.0`
-------------
-
-- Complete UX revamping
-- Adding of topup products
-
 `1.0.0`
 ------------
 

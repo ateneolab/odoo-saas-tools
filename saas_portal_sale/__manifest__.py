@@ -2,16 +2,15 @@
     'name': "Saas Portal Sale",
     'author': "IT-Projects LLC, Ildar Nasyrov, Nicolas JEUDY",
     'license': 'LGPL-3',
-    'support': 'apps@it-projects.info',
-    'website': 'https://it-projects.info',
+    "support": "apps@it-projects.info",
+    'website': "https://twitter.com/nasyrov_ildar",
     'category': 'SaaS',
-    'summary': 'Sells SaaS products in the Webshop',
-    'version': '12.0.1.1.0',
+    'version': '12.0.1.0.0',
     'depends': [
         'sale',
-        'website_sale',
         'saas_portal',
         'product_price_factor',
+        'saas_portal_start',
         'contract',
     ],
     'data': [
@@ -21,4 +20,5 @@
         'data/mail_template_data.xml',
         'data/ir_config_parameter.xml',
     ],
+    'installable': True,
 }
