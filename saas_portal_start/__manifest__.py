@@ -1,7 +1,7 @@
 {
     'name': 'SaaS Portal - /page/start',
     'version': '1.0.0',
-    'author': 'Ivan Yelizariev, Nicolas JEUDY, Dave-O',
+    'author': 'Ivan Yelizariev, Nicolas JEUDY, Dave-o',
     'license': 'LGPL-3',
     'category': 'SaaS',
     "support": "apps@it-projects.info",
